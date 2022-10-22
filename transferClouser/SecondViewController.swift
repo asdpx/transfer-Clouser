@@ -6,9 +6,7 @@
 //
 
 import UIKit
-protocol FirstViewDelegate {
-    func update (text1: String, text2: String)
-}
+
 
 class SecondViewController: UIViewController {
 
@@ -31,22 +29,25 @@ class SecondViewController: UIViewController {
         button.addTarget(self, action: #selector(buttonTup), for: .touchUpInside)
         return button
     }()
-//сюда будут передаваться свойства из первого вью
     var text1 = ""
     var text2 = ""
-    var delegate: FirstViewDelegate?   //свойоствао делегат который будет опционалом делегата
+
+    var clouserOne: ((String) -> ())?
+    var clouserTwo: ((String) -> ())?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .lightGray
         setupViewLayat()
-// обрабатываем с 1 вью во второй (выводим на второй экран)
+
         dataTextFieldOneVC.text = text1
         dataTextFieldTwoVC.text = text2
 
     }
     @objc func buttonTup() {
         if let text1 = dataTextFieldOneVC.text, let text2 = dataTextFieldTwoVC.text {
-            delegate?.update(text1: text1, text2: text2)
+            clouserOne?(text1)
+            clouserTwo?(text2)
         }
         dismiss(animated: true)
     }

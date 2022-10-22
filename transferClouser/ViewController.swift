@@ -37,12 +37,18 @@ class ViewController: UIViewController {
 
     @objc func buttonTup() {
         let vc = SecondViewController()
-        //разворачиваем значения в 1 и 2 тесттвых полях и присваевыаем во второе окно
         if let text1 = dataTextFieldOne.text, let text2 = dataTextFieldTwo.text {
             vc.text1 = text1
             vc.text2 = text2
-            vc.delegate = self
+            vc.clouserOne = {[weak self] text1  in
+                self?.dataTextFieldOne.text = text1
+            }
+            vc.clouserTwo = {[weak self] text2 in
+                self?.dataTextFieldTwo.text = text2
+            }
+
         }
+        vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
     }
 
@@ -58,14 +64,6 @@ class ViewController: UIViewController {
             tranferButton.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             tranferButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
-    }
-
-}
-
-extension ViewController: FirstViewDelegate {
-    func update(text1: String, text2: String) {
-        dataTextFieldOne.text = text1
-        dataTextFieldTwo.text = text2
     }
 }
 
